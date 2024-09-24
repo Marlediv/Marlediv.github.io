@@ -245,3 +245,15 @@ footer .container {
         font-size: 0.8rem;
     }
 }
+
+/* Für mobile Geräte den Abstand nach dem Header anpassen */
+@media screen and (max-width: 768px) {
+    /* Abstand für den Inhalt unterhalb des Headers */
+    body {
+        padding-top: 70px; /* Stellt sicher, dass der Header Platz für den Inhalt lässt */
+    }
+
+    header {
+        height: 70px; /* Legt die Höhe des Headers fest */
+    }
+}
