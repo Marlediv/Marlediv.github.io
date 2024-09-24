@@ -1,6 +1,6 @@
-/* styles.css */
+/* Allgemeine Styles */
 body {
-    font-family: 'Netflix Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     color: #fff;
@@ -11,7 +11,7 @@ body {
 header {
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
-    padding: 1rem 0;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,7 +22,6 @@ header {
 
 .logo {
     font-size: 1.5rem;
-    margin-left: 2rem;
 }
 
 header nav ul {
@@ -47,6 +46,7 @@ header nav ul li a:hover {
     color: #87cefa;
 }
 
+/* Section Styles */
 section {
     padding: 4rem 0;
     background: rgba(0, 0, 0, 0.6);
@@ -97,11 +97,6 @@ p {
 
 .project-item:hover {
     transform: scale(1.05);
-}
-
-.project-item h3 {
-    margin-top: 0;
-    color: #87cefa;
 }
 
 .skills-list {
@@ -166,4 +161,87 @@ footer {
 footer .container {
     display: flex;
     justify-content: center;
+}
+
+/* Media Queries für mobile Geräte */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header nav ul {
+        flex-direction: column;
+    }
+
+    header nav ul li {
+        margin: 0.5rem 0;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    .project-list {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .project-item {
+        flex: 1 1 100%;
+    }
+
+    .skills-list {
+        flex-direction: column;
+    }
+
+    section {
+        padding: 2rem 0;
+    }
+
+    .container {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    header nav ul li {
+        margin: 0.5rem 0;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .project-item {
+        padding: 1rem;
+    }
+
+    input, textarea {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
 }
