@@ -257,3 +257,38 @@ footer .container {
         height: 70px; /* Legt die Höhe des Headers fest */
     }
 }
+
+/* Menü im mobilen Zustand ausblenden */
+@media screen and (max-width: 768px) {
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        padding: 1rem 0;
+        text-align: center;
+    }
+
+    /* Button zum Öffnen des Menüs */
+    .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    /* Beim Klicken auf den Button das Menü einblenden */
+    .menu-open nav ul {
+        display: flex;
+    }
+
+    /* Logo und Button horizontal zentrieren */
+    header {
+        justify-content: space-between;
+    }
+}
