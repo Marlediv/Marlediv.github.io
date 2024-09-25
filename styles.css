@@ -260,6 +260,15 @@ footer .container {
 
 /* Menü im mobilen Zustand ausblenden */
 @media screen and (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Sicherstellen, dass der Inhalt unter dem Header sichtbar ist */
+    }
+
+    header {
+        height: 70px;
+        justify-content: space-between;
+    }
+
     header nav ul {
         display: none;
         flex-direction: column;
@@ -272,7 +281,7 @@ footer .container {
         text-align: center;
     }
 
-    /* Button zum Öffnen des Menüs */
+    /* Hamburger-Button */
     .menu-toggle {
         display: block;
         background: none;
@@ -282,13 +291,8 @@ footer .container {
         cursor: pointer;
     }
 
-    /* Beim Klicken auf den Button das Menü einblenden */
+    /* Menü wird angezeigt, wenn die Klasse "menu-open" gesetzt ist */
     .menu-open nav ul {
         display: flex;
-    }
-
-    /* Logo und Button horizontal zentrieren */
-    header {
-        justify-content: space-between;
     }
 }
