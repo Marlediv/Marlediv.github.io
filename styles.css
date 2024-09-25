@@ -1,3 +1,9 @@
+/* Standard: Hamburger-Menü auf größeren Bildschirmen verstecken */
+.menu-toggle {
+    display: none; /* Versteckt den Hamburger-Button auf großen Bildschirmen */
+}
+
+
 /* Allgemeine Styles */
 body {
     font-family: 'Roboto', sans-serif;
@@ -293,6 +299,36 @@ footer .container {
 
     /* Menü wird angezeigt, wenn die Klasse "menu-open" gesetzt ist */
     .menu-open nav ul {
+        display: flex;
+    }
+}
+
+/* Menü im mobilen Zustand anzeigen */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Zeigt den Hamburger-Button nur auf kleinen Bildschirmen */
+    }
+
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        padding: 1rem 0;
+        text-align: center;
+    }
+
+    .menu-open nav ul {
+        display: flex;
+    }
+}
+
+/* Menü bleibt auf größeren Bildschirmen immer sichtbar */
+@media screen and (min-width: 769px) {
+    header nav ul {
         display: flex;
     }
 }
