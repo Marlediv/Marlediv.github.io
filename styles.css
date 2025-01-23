@@ -8,6 +8,7 @@ body {
     background-size: cover;
 }
 
+/* Header */
 header {
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -49,7 +50,7 @@ header nav ul li a:hover {
 /* Section Styles */
 section {
     padding: 4rem 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6); /* Dunkler Hintergrund für Lesbarkeit */
     margin: 0;
 }
 
@@ -66,6 +67,7 @@ h1, h2 {
 
 h1 {
     font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
 h2 {
@@ -76,8 +78,10 @@ h2 {
 p {
     text-align: center;
     line-height: 1.6;
+    color: #e0e0e0; /* Etwas helleres Grau für bessere Lesbarkeit */
 }
 
+/* Projektliste */
 .project-list {
     display: flex;
     flex-wrap: wrap;
@@ -92,29 +96,35 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex: 1 1 calc(33.333% - 2rem);
     box-sizing: border-box;
-    transition: transform 0.3s;
+    transition: transform 0.3s, background-color 0.3s;
 }
 
 .project-item:hover {
     transform: scale(1.05);
+    background: #87cefa; /* Hebt die Projektbox hervor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt beim Hover */
+    color: white;
 }
 
-.skills-list {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 0;
-    list-style: none;
+.project-item h3 {
+    margin: 0 0 1rem;
+    color: #87cefa;
 }
 
-.skills-list li {
-    background: rgba(51, 51, 51, 0.8);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0.5rem;
+.project-item:hover h3 {
+    color: white;
 }
 
+.project-item p {
+    color: #ddd;
+    transition: color 0.3s;
+}
+
+.project-item:hover p {
+    color: #fff; /* Textfarbe auf Weiß ändern */
+}
+
+/* Kontaktformular */
 form {
     display: flex;
     flex-direction: column;
@@ -148,9 +158,10 @@ button {
 }
 
 button:hover {
-    background: #00a2ff;
+    background: #87cefa;
 }
 
+/* Footer */
 footer {
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -161,4 +172,21 @@ footer {
 footer .container {
     display: flex;
     justify-content: center;
+}
+
+/* Navigationselemente */
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem; /* Vergrößert die Klickfläche */
+    border-radius: 8px;   /* Gleiche Rundungen wie bei den Projekt-Buttons */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Sanfte Übergänge */
+}
+
+header nav ul li a:hover {
+    background-color: #87cefa; /* Gleiche Farbe wie bei Projekt-Buttons */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schatten */
+    transform: translateY(-2px); /* Leichtes Anheben */
 }
