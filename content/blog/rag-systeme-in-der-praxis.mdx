@@ -1,0 +1,43 @@
+---
+title: "RAG-Systeme in der Praxis"
+description: "Retrieval-Augmented Generation klingt in der Theorie einfach. In der Praxis entscheidet vor allem die Datenaufbereitung über Erfolg oder Misserfolg."
+date: "2026-03-02"
+category: "AI"
+tags: ["RAG", "LLM", "Vector Search"]
+---
+
+Retrieval-Augmented Generation (RAG) verspricht, Sprachmodelle mit aktuellem, unternehmensspezifischem Wissen zu verbinden, ohne sie neu zu trainieren. Das Grundprinzip ist schnell erklärt: Relevante Textausschnitte werden zur Laufzeit gesucht und dem Modell als Kontext mitgegeben. Die eigentliche Herausforderung liegt jedoch selten im Modell – sie liegt in der Datenaufbereitung davor.
+
+## Chunking ist keine Nebensache
+
+Wie ein Dokument in Abschnitte zerlegt wird, entscheidet maßgeblich über die Qualität der späteren Antworten. Zu kleine Abschnitte verlieren Kontext, zu große verwässern die semantische Suche.
+
+```python
+def chunk_text(text, max_tokens=300, overlap=50):
+    words = text.split()
+    chunks = []
+    start = 0
+    while start < len(words):
+        end = start + max_tokens
+        chunks.append(" ".join(words[start:end]))
+        start = end - overlap
+    return chunks
+```
+
+Ein Überlappungsbereich zwischen aufeinanderfolgenden Abschnitten hilft, Informationen nicht genau an einer Chunk-Grenze zu verlieren.
+
+## Embeddings sind nur so gut wie ihre Quelle
+
+Ein sauber gechunktes Dokument, aber mit inkonsistenter Formatierung, führt trotzdem zu schwachen Suchergebnissen. Tabellen, die beim Textextrahieren zerfallen, oder Überschriften, die keinen erkennbaren Bezug mehr zum folgenden Absatz haben, verschlechtern die Qualität der Embeddings spürbar – unabhängig davon, welches Embedding-Modell verwendet wird.
+
+## Retrieval ist mehr als Ähnlichkeitssuche
+
+Reine Vektor-Ähnlichkeit liefert oft thematisch passende, aber nicht unbedingt die relevantesten Ergebnisse. In der Praxis hat sich eine Kombination bewährt: Vektorsuche für semantische Nähe, kombiniert mit klassischer Stichwortsuche und einem nachgelagerten Reranking der Top-Kandidaten.
+
+## Quellenangaben sind kein Bonus-Feature
+
+Ein RAG-System ohne nachvollziehbare Quellenangabe wirkt zunächst überzeugend, verliert aber schnell an Vertrauen, sobald eine Antwort falsch ist. Jede generierte Antwort sollte auf die tatsächlich verwendeten Textausschnitte zurückführen – nicht nur aus Transparenzgründen, sondern auch, um Fehler in der Wissensbasis selbst leichter zu erkennen.
+
+## Fazit
+
+Ein RAG-System ist kein reines Modellthema, sondern zu großen Teilen ein Data-Engineering-Problem: saubere Aufbereitung, durchdachtes Chunking und nachvollziehbares Retrieval entscheiden am Ende deutlich stärker über die Qualität als die Wahl des Sprachmodells selbst.

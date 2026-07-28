@@ -1,0 +1,193 @@
+@import "tailwindcss";
+@import "@fontsource/manrope/500.css";
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+/*
+  Designsystem "Signalfluss":
+  Anthrazit/Schwarz als Basis, elektrisches Blau als Primärakzent (Datenfluss),
+  zurückhaltendes Violett als Sekundärakzent (KI/Automatisierung).
+  Dark Mode ist die primäre Erscheinung, Light Mode ein vollwertiges Pendant.
+*/
+
+:root {
+  --background: #ffffff;
+  --background-elevated: #f6f7f8;
+  --surface: #f3f4f6;
+  --surface-hover: #e9ebee;
+  --foreground: #0b0d10;
+  --muted-foreground: #565f6b;
+  --border: #e2e5e9;
+  --border-strong: #cbd0d6;
+
+  --accent-blue: #2f6fed;
+  --accent-blue-foreground: #ffffff;
+  --accent-violet: #7c5cf0;
+  --accent-violet-soft: #efeaff;
+
+  --success: #1a8a5f;
+  --danger: #d84343;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+}
+
+.dark {
+  --background: #06070a;
+  --background-elevated: #0b0d11;
+  --surface: #101318;
+  --surface-hover: #161a21;
+  --foreground: #eef1f5;
+  --muted-foreground: #8b93a1;
+  --border: #1d222a;
+  --border-strong: #2a303a;
+
+  --accent-blue: #4c8bff;
+  --accent-blue-foreground: #05070d;
+  --accent-violet: #9b86f8;
+  --accent-violet-soft: #1c1830;
+
+  --success: #3ecf94;
+  --danger: #f0625f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-foreground: var(--accent-blue-foreground);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-violet-soft: var(--accent-violet-soft);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--accent-blue);
+  color: var(--accent-blue-foreground);
+}
+
+/* Sichtbarer Fokuszustand für Tastaturnavigation (WCAG 2.1 AA) */
+:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 1rem;
+  z-index: 100;
+  background: var(--accent-blue);
+  color: var(--accent-blue-foreground);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: 1rem;
+}
+
+/* Scrollbar, dezent */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Prosa-Stil für Blogartikel (MDX) */
+.prose-article {
+  color: var(--foreground);
+  max-width: 68ch;
+}
+.prose-article h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.prose-article h3 {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+.prose-article p {
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+  color: var(--foreground);
+}
+.prose-article ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--foreground);
+}
+.prose-article li {
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+}
+.prose-article a {
+  color: var(--accent-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-article strong {
+  font-weight: 600;
+}

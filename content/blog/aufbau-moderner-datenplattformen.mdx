@@ -1,0 +1,41 @@
+---
+title: "Aufbau moderner Datenplattformen"
+description: "Warum die Medaillon-Architektur (Bronze, Silver, Gold) heute ein sinnvoller Standard für skalierbare Datenplattformen ist – und wo ihre Grenzen liegen."
+date: "2026-05-04"
+category: "Data Engineering"
+tags: ["Data Platforms", "Architektur", "Lakehouse"]
+---
+
+Eine Datenplattform ist selten das Problem – das Problem ist fast immer die fehlende Struktur darunter. Rohdaten, Transformationen und Reporting-Logik landen in einem Topf, niemand weiß mehr genau, welche Tabelle „die Wahrheit" ist, und jede Änderung fühlt sich an wie eine Operation am offenen Herzen.
+
+## Warum Schichten helfen
+
+Eine bewährte Antwort darauf ist die Medaillon-Architektur mit drei klar abgegrenzten Schichten:
+
+- **Bronze** – Rohdaten, so nah wie möglich am Quellsystem, unverändert und vollständig historisiert.
+- **Silver** – bereinigte, validierte und harmonisierte Daten, bereits mit einheitlichen Typen und Schlüsseln.
+- **Gold** – aggregierte, geschäftsnahe Modelle, die direkt für Reporting und Analytics genutzt werden.
+
+Diese Trennung ist kein Selbstzweck. Sie sorgt dafür, dass ein fehlerhafter Wert in einem Quellsystem nicht sofort das gesamte Reporting verfälscht, sondern kontrolliert in einer Schicht abgefangen werden kann.
+
+```python
+# Vereinfachtes Beispiel einer Silver-Transformation
+def clean_orders(df):
+    return (
+        df.dropna(subset=["order_id", "customer_id"])
+        .withColumn("order_date", to_date("order_date"))
+        .dropDuplicates(["order_id"])
+    )
+```
+
+## Orchestrierung als Rückgrat
+
+Ohne verlässliche Orchestrierung bleibt jede Architektur Theorie. Abhängigkeiten zwischen Schichten müssen explizit modelliert werden: Gold-Modelle dürfen erst laufen, wenn die zugehörigen Silver-Tabellen erfolgreich aktualisiert wurden. Tools wie Airflow oder native Orchestrierung in Databricks machen diese Abhängigkeiten sichtbar und testbar, statt sie implizit im Kopf einzelner Teammitglieder zu halten.
+
+## Wo die Architektur an Grenzen stößt
+
+Die Medaillon-Architektur ist kein Selbstläufer für jeden Anwendungsfall. Bei sehr kleinen Datenmengen oder einzelnen, isolierten Auswertungen erzeugt sie unnötigen Overhead. Und sie ersetzt keine Data-Governance – eine sauber geschichtete Plattform mit undokumentierten Definitionen ist nur eine besser organisierte Unübersichtlichkeit.
+
+## Fazit
+
+Struktur schlägt Schnelligkeit. Eine klar geschichtete Plattform macht Datenflüsse nachvollziehbar, Fehler eingrenzbar und neue Anforderungen einfacher umsetzbar – vorausgesetzt, sie wird konsequent mit Orchestrierung, Tests und Dokumentation kombiniert statt als reines Ordnerschema verstanden.

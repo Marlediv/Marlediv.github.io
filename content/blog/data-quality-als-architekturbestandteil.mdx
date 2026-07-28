@@ -1,0 +1,48 @@
+---
+title: "Data Quality als Bestandteil der Architektur"
+description: "Data Quality nachträglich zu prüfen kommt zu spät. Warum Qualitätsregeln von Anfang an Teil der Pipeline sein sollten, nicht ein Kontrollschritt danach."
+date: "2026-04-12"
+category: "Data Engineering"
+tags: ["Data Quality", "Testing", "dbt"]
+---
+
+Die häufigste Reaktion auf Datenqualitätsprobleme ist eine zusätzliche Kontrolle am Ende der Pipeline. Ein Report prüft die fertigen Zahlen, jemand vergleicht sie mit der Erwartung, und im Zweifel beginnt die mühsame Suche nach der Ursache – irgendwo weiter vorne im Datenfluss.
+
+## Das eigentliche Problem
+
+Diese Kontrolle kommt strukturell zu spät. Wenn ein Fehler erst im fertigen Reporting auffällt, ist er meist schon durch mehrere Transformationsschritte gewandert. Die Ursache zu finden bedeutet, die gesamte Pipeline rückwärts zu debuggen – ein Vorgang, der sowohl Zeit kostet als auch Vertrauen in die Daten untergräbt.
+
+## Qualität als Code
+
+Der wirksamere Ansatz ist, Erwartungen an Daten explizit und automatisiert zu prüfen, direkt an der Stelle, an der sie entstehen:
+
+```yaml
+# Beispiel: dbt-Test auf Spaltenebene
+models:
+  - name: orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('customers')
+              field: customer_id
+```
+
+Solche Tests laufen bei jedem Pipeline-Durchlauf automatisch mit. Schlägt ein Test fehl, stoppt im Idealfall genau der betroffene Teil der Pipeline – nicht das gesamte System, aber auch nicht unbemerkt weiterlaufend.
+
+## Schwellenwerte statt Alles-oder-nichts
+
+Nicht jede Abweichung ist ein Fehler. Sinnvolle Data-Quality-Regeln unterscheiden zwischen harten Regeln (z. B. eindeutige Schlüssel, Pflichtfelder) und weichen Erwartungen (z. B. „Bestellwert liegt normalerweise zwischen X und Y"), die als Warnung statt als Abbruch behandelt werden. Das verhindert, dass ein zu strenges Regelwerk am Ende einfach ignoriert wird.
+
+## Dokumentation als Nebenprodukt
+
+Ein oft unterschätzter Vorteil: Wenn Qualitätsregeln als Code formuliert sind, sind sie automatisch dokumentiert. Neue Teammitglieder sehen an einer zentralen Stelle, welche Annahmen über die Daten gelten – ohne auf veraltete Wiki-Seiten angewiesen zu sein.
+
+## Fazit
+
+Data Quality ist kein nachgelagerter Prüfschritt, sondern ein Architekturprinzip. Wer Qualitätsregeln als festen, automatisierten Bestandteil der Pipeline versteht, gewinnt nicht nur robustere Daten, sondern auch deutlich schnellere Fehlerdiagnosen.
