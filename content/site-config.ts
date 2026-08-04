@@ -5,7 +5,7 @@
 
 export const siteConfig = {
   name: "Marco",
-  fullName: "Marco",
+  fullName: "Marco Grochowiak",
   title: "Data Engineer",
   alternativeTitles: [
     "Senior Data Engineer",
@@ -21,7 +21,7 @@ export const siteConfig = {
     "Ich konzipiere und entwickle moderne Datenlösungen, die komplexe Informationen zuverlässig in verwertbare Geschäftsergebnisse verwandeln.",
   description:
     "Data Engineer mit Fokus auf skalierbare Cloud-Datenplattformen, robuste ETL/ELT-Pipelines, Data Quality und intelligente Automatisierung mit KI.",
-  email: "kontakt@example.com",
+  email: "marco.grochowiak@outlook.com",
   location: "Deutschland",
   locationCity: "Münsterland",
   availability: true,
@@ -30,7 +30,7 @@ export const siteConfig = {
   // Zentral konfigurierbare Links – hier später echte URLs eintragen.
   githubUsername: "marlediv",
   githubUrl: "https://github.com/marlediv",
-  linkedinUrl: "https://www.linkedin.com/in/example-platzhalter",
+  linkedinUrl: "https://www.linkedin.com/in/marco-grochowiak-2a5b3b313/",
   resumeUrl: "/documents/marco-cv.pdf",
 
   locale: "de-DE",
