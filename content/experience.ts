@@ -10,57 +10,79 @@ export type Experience = {
   technologies: string[];
 };
 
-/**
- * Beispielhafte, realistisch formulierte Stationen.
- * Firmennamen sind bewusst neutral gehalten (z. B. "Technologieunternehmen") –
- * ersetze sie durch deine tatsächlichen Angaben.
- */
 export const experience: Experience[] = [
   {
-    company: "Beratungsunternehmen (Beispiel)",
-    position: "Data Engineer",
-    location: "Deutschland",
-    startDate: "2025",
+    company: "Kitzmann Gruppe",
+    position: "IT & ERP Specialist",
+    startDate: "06/2026",
     current: true,
     description:
-      "Konzeption und Umsetzung von Datenplattformen für Kunden aus Logistik und Industrie, mit Fokus auf Automatisierung und Data Quality.",
+      "Mitwirkung an der qualitätsgesicherten Migration von Artikelstammdaten aus dem Legacy-ERP Beosys in APplus.",
     responsibilities: [
-      "Entwurf und Betrieb von ETL/ELT-Pipelines in Cloud-Umgebungen",
-      "Einführung automatisierter Datenqualitätsprüfungen",
-      "Zusammenarbeit mit Fachbereichen zur Übersetzung von Anforderungen in Datenmodelle",
+      "Analyse, Mapping und Validierung heterogener Artikelstammdaten",
+      "Entwicklung reproduzierbarer Generator-, Import- und Preflight-Prozesse",
+      "Abstimmung fachlicher Regeln und Datenqualitätsfragen mit Fachbereichen und Key-Usern",
     ],
-    technologies: ["Azure", "Databricks", "Python", "dbt", "SQL"],
+    technologies: ["Python", "SQL Server", "Pandas", "Excel", "Git", "APplus"],
   },
   {
-    company: "Enterprise-Umfeld (Beispiel)",
-    position: "Fachinformatiker – Daten- und Prozessanalyse (Umschulung mit Praxisanteil)",
-    location: "Münster",
-    startDate: "2024",
-    endDate: "2025",
+    company: "COMCAVE College",
+    position: "Umschulung zum Fachinformatiker für Daten- und Prozessanalyse (IHK)",
+    startDate: "02/2024",
+    endDate: "01/2026",
     current: false,
     description:
-      "Praxisorientierte Weiterbildung mit Schwerpunkt Datenverarbeitung, Prozessanalyse und Data Engineering, begleitet von einem betrieblichen Praktikum.",
+      "Beruflicher Wechsel in die Datenwelt mit Schwerpunkt Datenanalyse, Prozessmodellierung, Datenbanken und Data Engineering.",
     responsibilities: [
-      "Umsetzung eines Praxisprojekts entlang eines realistischen Logistik-Szenarios",
-      "Aufbau von Datenmodellen nach dem Data-Vault-Ansatz",
-      "Entwicklung einer internen Webanwendung inkl. Authentifizierung und Zeiterfassung",
+      "Analyse und Modellierung von Daten und Geschäftsprozessen",
+      "Konzeption relationaler und analytischer Datenmodelle",
+      "IHK-Abschlussprojekt mit ETL-Prozess, Data Vault und dimensionalem Datenmodell",
     ],
-    technologies: ["Python", "SQL", "PostgreSQL", "React", "Flask", "Docker"],
+    technologies: ["Python", "SQL", "PostgreSQL", "Data Vault", "ETL", "BPMN"],
   },
   {
-    company: "Logistikunternehmen (Beispiel)",
-    position: "Fachkraft E-Commerce-Logistik",
-    location: "Deutschland",
-    startDate: "2019",
-    endDate: "2024",
+    company: "Holtkamp Consulting",
+    position: "Praktikum Data Engineering & Business Intelligence",
+    startDate: "03/2025",
+    endDate: "10/2025",
     current: false,
     description:
-      "Mehrjährige operative Erfahrung in der E-Commerce-Logistik – Grundlage für ein praxisnahes Verständnis von Prozessen, Datenflüssen und Schnittstellen, das heute in die Data-Engineering-Arbeit einfließt.",
+      "Betriebliche Praxisphase innerhalb der Umschulung mit Fokus auf Datenanalyse, ETL-Logik und analytische Datenstrukturen.",
     responsibilities: [
-      "Steuerung logistischer Prozesse und Schnittstellen zu IT-Systemen",
-      "Mitwirkung an der Digitalisierung operativer Abläufe",
-      "Schnittstelle zwischen operativem Geschäft und technischen Systemen",
+      "Erstellung und Optimierung von SQL-Abfragen und ETL-Logik",
+      "Entwicklung und Dokumentation fachlicher und analytischer Datenmodelle",
+      "Modellierung von Datenstrukturen und Geschäftsprozessen mit (S)ERM und BPMN",
     ],
-    technologies: ["SAP", "Prozessanalyse", "Schnittstellenmanagement"],
+    technologies: ["SQL", "ETL", "Data Modeling", "Business Intelligence", "BPMN", "SERM"],
+  },
+  {
+    company: "FIEGE",
+    position: "Teamleitung & operative Logistik",
+    startDate: "07/2018",
+    endDate: "04/2023",
+    current: false,
+    description:
+      "Führung und Koordination operativer Logistikprozesse im E-Commerce-Umfeld als Fundament für mein heutiges Verständnis datengetriebener Abläufe.",
+    responsibilities: [
+      "Fachliche Führung und Einsatzkoordination im operativen Tagesgeschäft",
+      "Steuerung und Kontrolle von Waren- und Prozessflüssen",
+      "Arbeit mit Warenwirtschaftssystemen, Kennzahlen und operativen Systembuchungen",
+    ],
+    technologies: ["Warenwirtschaft", "Prozesssteuerung", "KPI", "Teamführung"],
+  },
+  {
+    company: "Chemische Industrie",
+    position: "Chemikant & Produktionsmitarbeiter",
+    startDate: "2002",
+    endDate: "2017",
+    current: false,
+    description:
+      "Langjährige Tätigkeit in der chemischen Produktion mit hoher Verantwortung für Prozesssicherheit, Qualität und verlässliche Dokumentation.",
+    responsibilities: [
+      "Steuerung und Überwachung technischer Produktionsanlagen",
+      "Durchführung und Dokumentation von Prozess- und Qualitätskontrollen",
+      "Strukturiertes Arbeiten nach Sicherheits-, Qualitäts- und Verfahrensvorgaben",
+    ],
+    technologies: ["SAP", "Prozessüberwachung", "Qualitätssicherung", "Anlagensteuerung"],
   },
 ];

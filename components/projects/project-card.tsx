@@ -14,11 +14,11 @@ const statusLabel: Record<Project["status"], string> = {
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Card className="group flex flex-col overflow-hidden transition-colors hover:border-border-strong">
+    <Card className="group/project-card flex flex-col overflow-hidden hover:border-border-strong">
       <Link href={`/projekte/${project.slug}`} className="block aspect-[5/3] overflow-hidden">
         <ProjectCover
           variant={project.coverVariant}
-          className="h-full w-full transition-transform duration-300 group-hover:scale-[1.03]"
+          className="h-full w-full"
         />
       </Link>
 
@@ -30,7 +30,7 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
 
         <Link href={`/projekte/${project.slug}`}>
-          <h3 className="font-display text-lg font-semibold text-foreground transition-colors group-hover:text-accent-blue">
+          <h3 className="font-display text-lg font-semibold text-foreground transition-colors duration-500 group-hover/project-card:text-accent-blue">
             {project.title}
           </h3>
         </Link>
@@ -47,7 +47,7 @@ export function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
 
-        <div className="mt-5 flex items-center gap-4 border-t border-border pt-4 text-sm text-muted-foreground">
+        <div className="mt-5 flex origin-bottom-left items-center gap-4 border-t border-border pt-4 text-sm text-muted-foreground transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/project-card:scale-[0.9524] motion-reduce:transform-none motion-reduce:transition-none">
           {project.githubUrl && (
             <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-foreground">
               <GithubIcon width={14} height={14} /> Code

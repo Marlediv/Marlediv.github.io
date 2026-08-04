@@ -8,38 +8,58 @@ export type SkillCategory = {
 export const skillCategories: SkillCategory[] = [
   {
     id: "data-engineering",
-    title: "Data Engineering",
-    description: "Pipelines, Transformationen und Orchestrierung großer Datenmengen.",
-    skills: ["Python", "SQL", "Apache Spark", "dbt", "Apache Airflow", "Kafka", "Delta Lake"],
+    title: "Data Engineering & Modellierung",
+    description:
+      "Nachvollziehbare Datenflüsse und belastbare Modelle vom Quellsystem bis zur analytischen Struktur.",
+    skills: [
+      "SQL",
+      "Python",
+      "ETL/ELT",
+      "Data Warehousing",
+      "Dimensional Modeling",
+      "Data Vault",
+    ],
   },
   {
-    id: "cloud",
-    title: "Cloud",
-    description: "Plattformen für skalierbares Speichern, Verarbeiten und Bereitstellen von Daten.",
-    skills: ["Microsoft Azure", "AWS", "Google Cloud", "Databricks", "Snowflake"],
+    id: "migration-data-quality",
+    title: "Migration & Datenqualität",
+    description:
+      "Strukturierte Überführung gewachsener Datenbestände mit Mapping, Validierung und klaren Prüfpfaden.",
+    skills: [
+      "ERP-Stammdatenmigration",
+      "Data Profiling",
+      "Fachliches Mapping",
+      "Datenvalidierung",
+      "Pandas",
+      "SQL Server",
+    ],
   },
   {
-    id: "databases",
-    title: "Datenbanken",
-    description: "Relationale, analytische und vektorbasierte Datenspeicher.",
-    skills: ["PostgreSQL", "SQL Server", "BigQuery", "Snowflake", "Redis", "Vector Databases"],
+    id: "analytics-bi",
+    title: "Analytics & Business Intelligence",
+    description:
+      "Aufbereitung komplexer Daten zu verständlichen Kennzahlen, Modellen und Entscheidungsgrundlagen.",
+    skills: [
+      "Power BI",
+      "Semantic Models",
+      "Sternschema",
+      "Datenvisualisierung",
+      "PostgreSQL",
+      "Prozessanalyse",
+    ],
   },
   {
-    id: "devops",
-    title: "DevOps & Engineering",
-    description: "Automatisierung, Reproduzierbarkeit und Betrieb von Infrastruktur.",
-    skills: ["Docker", "Kubernetes", "Terraform", "GitHub Actions", "CI/CD", "Git", "Linux"],
-  },
-  {
-    id: "analytics",
-    title: "Analytics",
-    description: "Vom Rohdatum zum verständlichen, entscheidungsrelevanten Bericht.",
-    skills: ["Power BI", "Semantic Models", "Data Warehousing", "Dimensional Modeling", "Data Visualization"],
-  },
-  {
-    id: "ai-automation",
-    title: "AI & Automation",
-    description: "Intelligente Assistenten, Agenten und automatisierte Workflows.",
-    skills: ["OpenAI API", "Claude API", "RAG", "AI Agents", "MCP", "LangChain", "Vector Search", "Workflow Automation"],
+    id: "platform-ai-engineering",
+    title: "Plattformen & AI Engineering",
+    description:
+      "Moderne Datenplattformen und kontrollierte KI-Integration als technische Referenz- und Entwicklungsprojekte.",
+    skills: [
+      "Databricks",
+      "Snowflake",
+      "Apache Spark",
+      "AI Agents",
+      "Git",
+      "GitHub Actions",
+    ],
   },
 ];

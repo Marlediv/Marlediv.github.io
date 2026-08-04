@@ -11,10 +11,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <SkillsSection />
       <TrustBar />
       <FeaturedProjects />
       <AboutPreview />
-      <SkillsSection />
       <ExperienceSection />
       <GithubSection />
       <ContactCta />

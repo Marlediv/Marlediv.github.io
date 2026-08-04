@@ -15,7 +15,7 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
     <input
       ref={ref}
       className={cn(
-        "h-11 w-full rounded-[var(--radius-sm)] border border-border bg-background-elevated px-3.5 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-none focus-visible:border-accent-blue",
+        "h-11 w-full rounded-[var(--radius-sm)] border border-border bg-background-elevated/70 px-3.5 text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] backdrop-blur-md placeholder:text-muted-foreground transition-[border-color,box-shadow,background-color] focus-visible:border-accent-blue focus-visible:bg-surface/60 focus-visible:shadow-[0_0_22px_rgba(32,220,229,0.1)] focus-visible:outline-none",
         className,
       )}
       {...props}
@@ -29,7 +29,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
     <textarea
       ref={ref}
       className={cn(
-        "w-full rounded-[var(--radius-sm)] border border-border bg-background-elevated px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-none focus-visible:border-accent-blue resize-y min-h-[140px]",
+        "min-h-[140px] w-full resize-y rounded-[var(--radius-sm)] border border-border bg-background-elevated/70 px-3.5 py-3 text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] backdrop-blur-md placeholder:text-muted-foreground transition-[border-color,box-shadow,background-color] focus-visible:border-accent-blue focus-visible:bg-surface/60 focus-visible:shadow-[0_0_22px_rgba(32,220,229,0.1)] focus-visible:outline-none",
         className,
       )}
       {...props}

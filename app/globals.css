@@ -8,52 +8,56 @@
 @import "@fontsource/jetbrains-mono/500.css";
 
 /*
-  Designsystem "Signalfluss":
-  Anthrazit/Schwarz als Basis, elektrisches Blau als Primärakzent (Datenfluss),
-  zurückhaltendes Violett als Sekundärakzent (KI/Automatisierung).
-  Dark Mode ist die primäre Erscheinung, Light Mode ein vollwertiges Pendant.
+  Designsystem "Cyan Forge"
+  Vom Referenz-Mockup werden ausschliesslich Farbe, Licht und Materialitaet
+  uebernommen. Es gibt bewusst weder ein Windows-Logo noch ein Vier-Felder-Motiv.
 */
-
 :root {
-  --background: #ffffff;
-  --background-elevated: #f6f7f8;
-  --surface: #f3f4f6;
-  --surface-hover: #e9ebee;
-  --foreground: #0b0d10;
-  --muted-foreground: #565f6b;
-  --border: #e2e5e9;
-  --border-strong: #cbd0d6;
+  --background: #eef4f5;
+  --background-elevated: #f8fbfb;
+  --surface: #e2ebed;
+  --surface-hover: #d7e5e7;
+  --foreground: #071517;
+  --muted-foreground: #53666a;
+  --border: rgba(4, 129, 139, 0.18);
+  --border-strong: rgba(0, 178, 190, 0.38);
 
-  --accent-blue: #2f6fed;
-  --accent-blue-foreground: #ffffff;
-  --accent-violet: #7c5cf0;
-  --accent-violet-soft: #efeaff;
+  --accent-blue: #008e9a;
+  --accent-blue-foreground: #f4ffff;
+  --accent-violet: #007783;
+  --accent-violet-soft: rgba(0, 174, 184, 0.12);
 
-  --success: #1a8a5f;
+  --success: #0b9c72;
   --danger: #d84343;
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1.25rem;
+  --radius-sm: 0.7rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.4rem;
+
+  --glow-soft: 0 12px 42px rgba(0, 116, 126, 0.12);
+  --glow-accent: 0 0 28px rgba(0, 213, 224, 0.2);
 }
 
 .dark {
-  --background: #06070a;
-  --background-elevated: #0b0d11;
-  --surface: #101318;
-  --surface-hover: #161a21;
-  --foreground: #eef1f5;
-  --muted-foreground: #8b93a1;
-  --border: #1d222a;
-  --border-strong: #2a303a;
+  --background: #11191c;
+  --background-elevated: #172225;
+  --surface: #1c292d;
+  --surface-hover: #243438;
+  --foreground: #edfafa;
+  --muted-foreground: #9aadb0;
+  --border: rgba(135, 202, 207, 0.18);
+  --border-strong: rgba(0, 221, 232, 0.32);
 
-  --accent-blue: #4c8bff;
-  --accent-blue-foreground: #05070d;
-  --accent-violet: #9b86f8;
-  --accent-violet-soft: #1c1830;
+  --accent-blue: #20dce5;
+  --accent-blue-foreground: #011012;
+  --accent-violet: #00aeb9;
+  --accent-violet-soft: rgba(0, 216, 226, 0.1);
 
-  --success: #3ecf94;
+  --success: #43d9a3;
   --danger: #f0625f;
+
+  --glow-soft: 0 18px 60px rgba(0, 0, 0, 0.28);
+  --glow-accent: 0 0 34px rgba(0, 220, 230, 0.18);
 }
 
 @theme inline {
@@ -87,18 +91,57 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 78% -12%, rgba(0, 226, 236, 0.12), transparent 31rem),
+    radial-gradient(circle at 8% 36%, rgba(0, 138, 149, 0.08), transparent 34rem),
+    linear-gradient(180deg, var(--background), var(--background));
   color: var(--foreground);
   font-family: var(--font-sans);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
+.dark body {
+  background:
+    radial-gradient(circle at 78% -12%, rgba(0, 232, 242, 0.12), transparent 34rem),
+    radial-gradient(circle at 6% 38%, rgba(0, 129, 139, 0.08), transparent 38rem),
+    linear-gradient(180deg, #11191c 0%, #141f22 46%, #10181b 100%);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(32, 220, 229, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32, 220, 229, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  text-wrap: balance;
+  text-shadow: 0 0 34px rgba(32, 220, 229, 0.08);
+}
+
+section {
+  position: relative;
+}
+
+section.border-b {
+  border-color: color-mix(in srgb, var(--border) 72%, transparent);
 }
 
 ::selection {
@@ -106,11 +149,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-blue-foreground);
 }
 
-/* Sichtbarer Fokuszustand für Tastaturnavigation (WCAG 2.1 AA) */
 :focus-visible {
   outline: 2px solid var(--accent-blue);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 .skip-link {
@@ -118,40 +160,49 @@ h1, h2, h3, h4, h5, h6 {
   left: -9999px;
   top: 1rem;
   z-index: 100;
-  background: var(--accent-blue);
-  color: var(--accent-blue-foreground);
+  border: 1px solid var(--border-strong);
+  background: var(--background-elevated);
+  color: var(--foreground);
   padding: 0.75rem 1.25rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
+  box-shadow: var(--glow-accent);
 }
 
 .skip-link:focus {
   left: 1rem;
 }
 
-/* Scrollbar, dezent */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  border: 2px solid var(--background);
+  background: linear-gradient(var(--border-strong), var(--accent-violet));
   border-radius: 999px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Gemeinsame Materialwirkung fuer Karten, Formulare und mobile Navigation */
+.glass-panel {
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), transparent 44%),
+    color-mix(in srgb, var(--surface) 80%, transparent);
+  box-shadow: var(--glow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(18px) saturate(125%);
 }
 
-/* Prosa-Stil für Blogartikel (MDX) */
+.accent-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+  box-shadow: 0 0 18px rgba(32, 220, 229, 0.38);
+}
+
+/* Prosa-Stil fuer Blogartikel */
 .prose-article {
   color: var(--foreground);
   max-width: 68ch;
@@ -169,7 +220,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 .prose-article p {
-  line-height: 1.75;
+  line-height: 1.78;
   margin-bottom: 1.25rem;
   color: var(--foreground);
 }
@@ -186,8 +237,24 @@ h1, h2, h3, h4, h5, h6 {
 .prose-article a {
   color: var(--accent-blue);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent-blue) 52%, transparent);
+  text-underline-offset: 4px;
 }
 .prose-article strong {
   font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body::before {
+    background-size: 42px 42px;
+  }
 }
