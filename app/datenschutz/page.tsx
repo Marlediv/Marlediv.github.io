@@ -16,7 +16,7 @@ export default function DatenschutzPage() {
       <div className="mt-6 rounded-[var(--radius-md)] border border-accent-violet/30 bg-accent-violet-soft p-4 text-sm text-foreground">
         <strong>Hinweis (vor Veröffentlichung entfernen):</strong> Dieser Text ist ein Muster, keine
         Rechtsberatung, und muss vor dem Livegang an die tatsächlich eingesetzten Dienste (z. B. Hosting,
-        E-Mail-Versand über Resend, ggf. Analyse-Tools) sowie an die geltende Rechtslage angepasst werden.
+        ggf. Analyse-Tools) sowie an die geltende Rechtslage angepasst werden.
       </div>
 
       <div className="prose-article mt-10">
@@ -36,12 +36,13 @@ export default function DatenschutzPage() {
 
         <h2>3. Kontaktformular</h2>
         <p>
-          Wenn Sie das Kontaktformular nutzen, werden die von Ihnen angegebenen Daten (Name, E-Mail-Adresse,
-          ggf. Unternehmen, Betreff, Nachricht) verarbeitet, um Ihre Anfrage zu beantworten. Rechtsgrundlage
-          ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. lit. f DSGVO (berechtigtes Interesse
-          an der Kommunikation). Der Versand erfolgt technisch über einen E-Mail-Dienstleister (Platzhalter:
-          Resend) – bitte hier die tatsächlich genutzte Konfiguration und ggf. einen Auftragsverarbeitungsvertrag
-          ergänzen.
+          Das Kontaktformular öffnet Ihr lokales E-Mail-Programm mit einer vorausgefüllten Nachricht
+          („mailto:“-Link); die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, ggf. Unternehmen,
+          Betreff, Nachricht) werden dabei ausschließlich lokal in Ihrem Browser verarbeitet und nicht an
+          einen Server dieser Website übertragen. Der eigentliche Versand erfolgt erst, wenn Sie die
+          vorbereitete E-Mail über Ihr E-Mail-Programm absenden; Rechtsgrundlage hierfür ist Art. 6 Abs. 1
+          lit. b DSGVO (vorvertragliche Anfrage) bzw. lit. f DSGVO (berechtigtes Interesse an der
+          Kommunikation).
         </p>
 
         <h2>4. Keine Weitergabe an Dritte ohne Rechtsgrundlage</h2>
