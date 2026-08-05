@@ -12,7 +12,7 @@ Designsystem: **"Signalfluss"** – Anthrazit/Schwarz mit elektrischem Blau und 
 - Zentrale Content-Verwaltung unter `/content` (keine hartcodierten Texte in Komponenten)
 - Projektübersicht mit Kategorie-Filter, Projekt-Detailseiten
 - Vollständiges Blog-System mit MDX: Tags, Kategorien, Lesedauer, Suche, Filter, Pagination, Inhaltsverzeichnis, Syntax-Highlighting, verwandte Beiträge
-- Kontaktformular mit React Hook Form + Zod, Honeypot-Spamschutz, serverseitiger Validierung, Resend-Integration (mit funktionierendem Dev-Fallback ohne API-Key)
+- Kontaktformular mit React Hook Form + Zod, Honeypot-Spamschutz; öffnet beim Absenden das E-Mail-Programm mit vorausgefüllter Nachricht (`mailto:`) – funktioniert vollständig statisch, ohne eigenen Server
 - GitHub-Integration (öffentliche API, serverseitiges Caching, robuste Fehlerbehandlung bei Rate-Limit/Ausfall)
 - SEO: Metadata API, Open Graph, Twitter Cards, dynamische `sitemap.xml` & `robots.txt`, JSON-LD (Person, WebSite, BlogPosting, Breadcrumb)
 - Barrierefreiheit: Skip-Link, sichtbare Fokuszustände, semantisches HTML, `prefers-reduced-motion`
@@ -41,9 +41,7 @@ npm install
 npm run dev
 ```
 
-Die Seite ist danach unter `http://localhost:3000` erreichbar. Das Kontaktformular funktioniert auch **ohne**
-konfigurierten `RESEND_API_KEY` – Nachrichten werden dann nur in der Server-Konsole protokolliert und der
-Nutzer erhält eine klare Erfolgsmeldung, die das kenntlich macht.
+Die Seite ist danach unter `http://localhost:3000` erreichbar.
 
 ## Konfiguration
 
@@ -57,8 +55,6 @@ cp .env.example .env.local
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Basis-URL, wird für Metadata, Sitemap und Canonical-Links verwendet |
 | `NEXT_PUBLIC_GITHUB_USERNAME` | GitHub-Benutzername für die GitHub-Sektion auf der Startseite |
-| `RESEND_API_KEY` | API-Key von resend.com für den E-Mail-Versand des Kontaktformulars |
-| `CONTACT_EMAIL` | Ziel-E-Mail-Adresse für eingehende Kontaktanfragen |
 
 ## Inhalte bearbeiten
 
@@ -113,9 +109,10 @@ funktioniert auch bei Rate-Limit oder Netzwerkfehler robust weiter (mit Fallback
 
 ### Kontaktformular konfigurieren
 
-`RESEND_API_KEY` und `CONTACT_EMAIL` in `.env.local` setzen. Ohne diese Variablen läuft das Formular im
-Entwicklungsmodus weiter (siehe oben). In `app/api/contact/route.ts` kann bei Bedarf der Versandtext oder
-Absender angepasst werden.
+Das Kontaktformular sendet keine Daten an einen eigenen Server. Beim Absenden öffnet es das E-Mail-Programm
+mit einer vorausgefüllten Nachricht an `siteConfig.email` (`mailto:`-Link), damit der Versand auch auf dem
+rein statischen GitHub-Pages-Hosting ohne Node.js-Server funktioniert. Der Empfänger und die
+E-Mail-Vorlage lassen sich in `components/contact/contact-form.tsx` anpassen.
 
 ## Verfügbare Scripts
 
@@ -129,11 +126,10 @@ npm run lint     # ESLint
 ## Projektstruktur
 
 ```text
-app/                     # Next.js App Router (Seiten, Layouts, API-Routen)
+app/                     # Next.js App Router (Seiten, Layouts)
   projekte/[slug]/       # Dynamische Projekt-Detailseiten
   blog/[slug]/           # Dynamische Blogartikel-Seiten
-  api/contact/           # Kontaktformular-API-Route
-  sitemap.ts, robots.ts  # SEO-Dateien
+  sitemap.ts, robots.ts  # SEO-Dateien (statisch generiert)
 components/
   layout/                # Header, Footer, Navigation, Theme, Scroll-Progress …
   sections/              # Homepage-/Seiten-Sektionen
@@ -148,31 +144,64 @@ public/documents/        # Ablageort für Lebenslauf-PDF
 
 ## Deployment
 
-### Vercel
+Aktiver Deployment-Weg ist **GitHub Pages** über statischen Next.js-Export (`output: "export"` in
+`next.config.ts`). Die folgenden Wege (Vercel, Docker, Netlify) sind **aktuell nicht aktiv** – sie setzen
+einen laufenden Node.js-Server voraus und sind mit `output: "export"` nicht kompatibel. Um sie wieder zu
+nutzen, müsste `next.config.ts` auf `output: "standalone"` (oder Default) zurückgestellt und die
+Kontakt-API-Route wiederhergestellt werden. Sie sind hier nur als Referenz für einen möglichen späteren
+Wechsel des Hosting-Modells dokumentiert.
+
+### GitHub Pages (aktiv)
+
+Die Website wird bei jedem Push auf `main` automatisch über den Workflow
+[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) gebaut und veröffentlicht:
+
+1. `npm ci`, `npm run lint`, `npm run build` (Next.js erzeugt dabei den statischen Export im Ordner `out/`).
+2. `NEXT_PUBLIC_SITE_URL` wird im Workflow fest auf `https://marlediv.github.io` gesetzt.
+3. `out/` wird über die offiziellen Actions `actions/configure-pages`, `actions/upload-pages-artifact` und
+   `actions/deploy-pages` veröffentlicht.
+4. Der Workflow lässt sich zusätzlich manuell über „Run workflow“ (`workflow_dispatch`) starten.
+
+**Einmalige manuelle Einrichtung in GitHub** (nicht durch Code abbildbar):
+
+1. Unter `Settings → Pages → Build and deployment` als Quelle **GitHub Actions** auswählen.
+2. Nach dem nächsten Workflowlauf ist die Seite unter `https://marlediv.github.io/` erreichbar.
+3. Live-Seite sowie direkte Aufrufe von Unterseiten (z. B. `/projekte/`, `/blog/`) im Browser prüfen.
+
+**Bekannte Einschränkungen des statischen Exports:**
+
+- Das Kontaktformular sendet nicht mehr über eine eigene API-Route/Resend, sondern öffnet einen
+  vorausgefüllten `mailto:`-Link im E-Mail-Programm der Nutzerin/des Nutzers (siehe unten).
+- Die zuvor über `next.config.ts` gesetzten HTTP-Sicherheits-Header (CSP, `X-Frame-Options` usw.) entfallen,
+  da GitHub Pages keine benutzerdefinierten Response-Header für einen statischen Next.js-Export unterstützt.
+- Eine eigene Domain ist nicht Teil dieses Deployment-Wegs und folgt in einem späteren Arbeitsschritt.
+
+### Vercel (aktuell inaktiv)
 
 1. Repository zu GitHub pushen.
 2. Auf vercel.com importieren.
 3. Umgebungsvariablen aus `.env.example` im Vercel-Dashboard hinterlegen.
-4. Deploy – Vercel erkennt Next.js automatisch, kein weiteres Setup nötig.
+4. `output: "export"` in `next.config.ts` entfernen bzw. auf Standard zurücksetzen, damit Vercel den
+   Server-Modus von Next.js nutzen kann.
 
-### Docker
+### Docker (aktuell inaktiv)
 
 ```bash
 docker build -t marco-portfolio .
 docker run -p 3000:3000 \
   -e NEXT_PUBLIC_SITE_URL=https://example.com \
   -e NEXT_PUBLIC_GITHUB_USERNAME=marlediv \
-  -e RESEND_API_KEY=... \
-  -e CONTACT_EMAIL=... \
   marco-portfolio
 ```
 
-Das `Dockerfile` nutzt Next.js' `output: "standalone"` für ein schlankes Produktions-Image (Multi-Stage-Build).
+Das `Dockerfile` erwartet `output: "standalone"` für ein schlankes Produktions-Image (Multi-Stage-Build).
+Mit dem aktuell aktiven `output: "export"` erzeugt `next build` keinen `.next/standalone`-Ordner mehr – für
+einen Docker-Betrieb müsste `next.config.ts` entsprechend angepasst werden.
 
-### Netlify
+### Netlify (aktuell inaktiv)
 
-Kompatibel über den offiziellen Next.js-Runtime-Adapter von Netlify; Umgebungsvariablen analog zu Vercel im
-Netlify-Dashboard hinterlegen.
+Kompatibel über den offiziellen Next.js-Runtime-Adapter von Netlify, sofern `output: "export"` nicht aktiv
+ist; Umgebungsvariablen analog zu Vercel im Netlify-Dashboard hinterlegen.
 
 ## Accessibility
 

@@ -3,6 +3,8 @@ import { siteMetadata } from "@/content/site-config";
 import { projects } from "@/content/projects";
 import { getAllPosts } from "@/lib/blog";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteMetadata.baseUrl;
 
