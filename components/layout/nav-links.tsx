@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { mainNavigation } from "@/content/navigation";
+import { isActivePath } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 export function NavLinks() {
@@ -11,7 +12,7 @@ export function NavLinks() {
   return (
     <nav aria-label="Hauptnavigation" className="hidden items-center gap-1 md:flex">
       {mainNavigation.map((item) => {
-        const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        const active = isActivePath(pathname, item.href);
         return (
           <Link
             key={item.href}

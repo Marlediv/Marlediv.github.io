@@ -8,17 +8,17 @@ import { HeroBackground } from "./hero-background";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[680px] overflow-hidden border-b border-border">
+    <section className="relative min-h-[620px] overflow-hidden border-b border-border">
       <HeroBackground />
-      <PageContainer className="relative flex min-h-[680px] items-center py-24 sm:py-32">
+      <PageContainer className="relative flex min-h-[620px] items-center py-24 sm:py-32">
         <div className="max-w-4xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-accent-blue/20 bg-accent-violet-soft px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-accent-blue shadow-[0_0_24px_rgba(32,220,229,0.08)] backdrop-blur-md">
             <span className="h-1.5 w-1.5 rounded-full bg-accent-blue shadow-[0_0_10px_var(--accent-blue)]" />
-            {siteConfig.title} · {siteConfig.location}
+            {siteConfig.title} · {siteConfig.region}
           </p>
 
-          <h1 className="mt-7 max-w-3xl font-display text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            {siteConfig.headlineDe}
+          <h1 className="mt-7 max-w-3xl font-display text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            {siteConfig.headline}
           </h1>
 
           <div className="mt-7 h-px w-32 bg-gradient-to-r from-accent-blue via-accent-blue/50 to-transparent shadow-[0_0_16px_rgba(32,220,229,0.5)]" />
@@ -38,9 +38,9 @@ export function HeroSection() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
-            <Link href={siteConfig.resumeUrl} className="inline-flex items-center gap-1.5 transition-colors hover:text-accent-blue">
-              <FileDown size={15} /> Lebenslauf (PDF)
-            </Link>
+            <a href={siteConfig.resumeUrl} className="inline-flex items-center gap-1.5 transition-colors hover:text-accent-blue">
+              <FileDown size={15} aria-hidden="true" /> Lebenslauf (PDF)
+            </a>
             <Link
               href={siteConfig.githubUrl}
               target="_blank"

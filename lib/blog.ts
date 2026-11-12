@@ -45,6 +45,16 @@ export function getPostBySlug(slug: string): BlogPost | null {
   const { data, content } = matter(raw);
   const stats = readingTime(content);
 
+  // Fehlerhaftes Frontmatter soll den Build stoppen, statt still eine kaputte Seite zu erzeugen.
+  for (const field of ["title", "description", "date"] as const) {
+    if (typeof data[field] !== "string" || data[field].trim() === "") {
+      throw new Error(`content/blog/${slug}.mdx: Frontmatter-Feld "${field}" fehlt oder ist kein String.`);
+    }
+  }
+  if (Number.isNaN(Date.parse(data.date))) {
+    throw new Error(`content/blog/${slug}.mdx: "date" ist kein gültiges Datum (erwartet z. B. "2026-06-01").`);
+  }
+
   return {
     slug,
     title: data.title,

@@ -14,20 +14,20 @@ export function Header() {
           href="/"
           className="group font-display text-[15px] font-semibold tracking-tight text-foreground"
         >
-          <span className="transition-colors group-hover:text-accent-blue">{siteConfig.name}</span>
-          <span className="ml-2 hidden font-normal text-muted-foreground sm:inline">/ Data Engineer</span>
+          <span className="transition-colors group-hover:text-accent-blue">{siteConfig.fullName}</span>
+          <span className="ml-2 hidden font-normal text-muted-foreground sm:inline">/ {siteConfig.title}</span>
         </Link>
 
         <div className="relative flex items-center gap-2">
           <NavLinks />
           <div className="mx-2 hidden h-5 w-px bg-border md:block" aria-hidden="true" />
-          <Link
+          <a
             href={siteConfig.resumeUrl}
             className="hidden items-center gap-1.5 rounded-[var(--radius-sm)] border border-border bg-surface/40 px-3 py-2 text-sm font-medium text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-[color,border-color,box-shadow] hover:border-border-strong hover:text-accent-blue hover:shadow-[0_0_20px_rgba(32,220,229,0.1)] md:inline-flex"
           >
-            <FileDown size={15} />
+            <FileDown size={15} aria-hidden="true" />
             Lebenslauf
-          </Link>
+          </a>
           <ThemeToggle />
           <MobileNavigation />
         </div>

@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { BackToTop } from "@/components/layout/back-to-top";
+import { JsonLd } from "@/components/layout/json-ld";
 import { siteConfig, siteMetadata } from "@/content/site-config";
+import { ogImage } from "@/lib/metadata";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,37 +17,46 @@ export const metadata: Metadata = {
     template: siteMetadata.titleTemplate,
   },
   description: siteMetadata.defaultDescription,
+  authors: [{ name: siteConfig.fullName, url: siteMetadata.baseUrl }],
+  creator: siteConfig.fullName,
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: siteMetadata.baseUrl,
     siteName: siteMetadata.siteName,
     title: siteMetadata.defaultTitle,
     description: siteMetadata.defaultDescription,
+    url: "/",
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteMetadata.defaultTitle,
-    description: siteMetadata.defaultDescription,
   },
-  alternates: {
-    canonical: siteMetadata.baseUrl,
-  },
+  // Canonical-URLs werden bewusst pro Seite gesetzt (siehe lib/metadata.ts) –
+  // ein Canonical im Root-Layout würde an alle Unterseiten vererbt.
   robots: {
     index: true,
     follow: true,
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eef4f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#11191c" },
+  ],
+};
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: siteConfig.name,
+  name: siteConfig.fullName,
   jobTitle: siteConfig.title,
+  description: siteConfig.description,
   url: siteMetadata.baseUrl,
   sameAs: [siteConfig.githubUrl, siteConfig.linkedinUrl],
   address: {
     "@type": "PostalAddress",
+    addressRegion: siteConfig.region,
     addressCountry: "DE",
   },
 };
@@ -55,6 +66,7 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: siteMetadata.siteName,
   url: siteMetadata.baseUrl,
+  inLanguage: "de-DE",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -69,14 +81,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <BackToTop />
         </ThemeProvider>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
+        <JsonLd data={personJsonLd} />
+        <JsonLd data={websiteJsonLd} />
       </body>
     </html>
   );

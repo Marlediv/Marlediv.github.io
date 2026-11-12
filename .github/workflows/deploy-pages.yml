@@ -1,24 +1,31 @@
-name: Deploy to GitHub Pages
+name: Build and deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Wöchentlicher Neu-Build (montags 05:17 UTC), damit die zur Build-Zeit
+    # geladene GitHub-Sektion nicht veraltet.
+    - cron: "17 5 * * 1"
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_SITE_URL: https://marlediv.github.io
+      NEXT_TELEMETRY_DISABLED: 1
+      # Nur lesender Zugriff auf die öffentliche API – hebt das Rate-Limit für die GitHub-Sektion an.
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,17 +45,19 @@ jobs:
       - name: Build static export
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

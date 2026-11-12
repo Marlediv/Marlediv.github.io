@@ -1,26 +1,26 @@
-import { Database, Cloud, Workflow, LineChart, Sparkles } from "lucide-react";
+import { ArrowLeftRight, ShieldCheck, Workflow, Boxes, FileText } from "lucide-react";
 import { PageContainer } from "@/components/layout/page-container";
 
 const focusAreas = [
-  { label: "Data Platforms", icon: Database },
-  { label: "Cloud Engineering", icon: Cloud },
-  { label: "Automation", icon: Workflow },
-  { label: "Analytics", icon: LineChart },
-  { label: "AI Solutions", icon: Sparkles },
+  { label: "Datenintegration & ERP-Migration", icon: ArrowLeftRight },
+  { label: "SQL-Validierung & Datenqualität", icon: ShieldCheck },
+  { label: "ETL/ELT-Pipelines", icon: Workflow },
+  { label: "Datenmodellierung", icon: Boxes },
+  { label: "Dokumentation & Prozessanalyse", icon: FileText },
 ];
 
 export function TrustBar() {
   return (
-    <section className="border-b border-border py-10">
+    <section aria-label="Schwerpunkte" className="border-b border-border py-10">
       <PageContainer>
-        <div className="flex flex-wrap items-center justify-between gap-6">
+        <ul className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:justify-center">
           {focusAreas.map(({ label, icon: Icon }) => (
-            <div key={label} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-              <Icon size={16} className="text-accent-blue" />
+            <li key={label} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+              <Icon size={16} className="text-accent-blue" aria-hidden="true" />
               {label}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </PageContainer>
     </section>
   );

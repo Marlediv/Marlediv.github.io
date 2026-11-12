@@ -18,6 +18,7 @@ export const skillCategories: SkillCategory[] = [
       "Data Warehousing",
       "Dimensional Modeling",
       "Data Vault",
+      "Prefect",
     ],
   },
   {
@@ -57,6 +58,7 @@ export const skillCategories: SkillCategory[] = [
       "Databricks",
       "Snowflake",
       "Apache Spark",
+      "Docker",
       "AI Agents",
       "Git",
       "GitHub Actions",

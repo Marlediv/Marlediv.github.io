@@ -1,21 +1,34 @@
+import GithubSlugger from "github-slugger";
+
 type Heading = { text: string; slug: string; depth: 2 | 3 };
 
-function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9äöüß\s-]/g, "")
-    .replace(/\s+/g, "-");
-}
-
+/**
+ * Liest H2/H3-Überschriften aus dem Markdown-Quelltext. Die Anker werden mit
+ * `github-slugger` erzeugt – derselben Bibliothek, die `rehype-slug` für die
+ * IDs im Artikel verwendet, damit beide garantiert übereinstimmen.
+ */
 export function extractHeadings(markdown: string): Heading[] {
-  const lines = markdown.split("\n");
+  const slugger = new GithubSlugger();
   const headings: Heading[] = [];
+  let inCodeBlock = false;
 
-  for (const line of lines) {
-    const h2 = /^##\s+(.+)/.exec(line);
-    const h3 = /^###\s+(.+)/.exec(line);
-    if (h2) headings.push({ text: h2[1].trim(), slug: slugify(h2[1].trim()), depth: 2 });
-    else if (h3) headings.push({ text: h3[1].trim(), slug: slugify(h3[1].trim()), depth: 3 });
+  for (const line of markdown.split("\n")) {
+    if (/^(```|~~~)/.test(line.trim())) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+    if (inCodeBlock) continue;
+
+    const match = /^(#{2,3})\s+(.+?)\s*#*$/.exec(line);
+    if (!match) continue;
+
+    // Inline-Markdown (Betonung, Code, Links) für Anzeige und Slug entfernen.
+    const text = match[2]
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+      .replace(/[*_`]/g, "")
+      .trim();
+
+    headings.push({ text, slug: slugger.slug(text), depth: match[1].length as 2 | 3 });
   }
 
   return headings;

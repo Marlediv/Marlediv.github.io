@@ -9,8 +9,6 @@ import { siteConfig } from "@/content/site-config";
 import { Label, Input, Textarea, FieldError } from "@/components/ui/form-fields";
 import { Button } from "@/components/ui/button";
 
-type SubmitState = { status: "idle" | "success" };
-
 // GitHub Pages liefert nur statische Dateien aus, ein serverseitiger
 // Formularversand (`/api/contact`) steht dort nicht zur Verfügung. Das
 // Formular öffnet daher das E-Mail-Programm der Nutzerin/des Nutzers mit
@@ -31,12 +29,11 @@ function buildMailtoUrl(values: ContactFormValues) {
 }
 
 export function ContactForm() {
-  const [submitState, setSubmitState] = useState<SubmitState>({ status: "idle" });
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -46,8 +43,7 @@ export function ContactForm() {
   function onSubmit(values: ContactFormValues) {
     // Honeypot: Bots, die das Feld ausfüllen, scheitern bereits an der Zod-Validierung.
     window.location.assign(buildMailtoUrl(values));
-    setSubmitState({ status: "success" });
-    reset();
+    setSubmitted(true);
   }
 
   return (
@@ -61,13 +57,13 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <Label htmlFor="name">Name</Label>
-          <Input id="name" autoComplete="name" {...register("name")} aria-invalid={!!errors.name} />
-          <FieldError>{errors.name?.message}</FieldError>
+          <Input id="name" autoComplete="name" {...register("name")} aria-invalid={!!errors.name} aria-describedby="name-error" />
+          <FieldError id="name-error">{errors.name?.message}</FieldError>
         </div>
         <div>
           <Label htmlFor="email">E-Mail</Label>
-          <Input id="email" type="email" autoComplete="email" {...register("email")} aria-invalid={!!errors.email} />
-          <FieldError>{errors.email?.message}</FieldError>
+          <Input id="email" type="email" autoComplete="email" {...register("email")} aria-invalid={!!errors.email} aria-describedby="email-error" />
+          <FieldError id="email-error">{errors.email?.message}</FieldError>
         </div>
       </div>
 
@@ -78,25 +74,28 @@ export function ContactForm() {
 
       <div>
         <Label htmlFor="subject">Betreff</Label>
-        <Input id="subject" {...register("subject")} aria-invalid={!!errors.subject} />
-        <FieldError>{errors.subject?.message}</FieldError>
+        <Input id="subject" {...register("subject")} aria-invalid={!!errors.subject} aria-describedby="subject-error" />
+        <FieldError id="subject-error">{errors.subject?.message}</FieldError>
       </div>
 
       <div>
         <Label htmlFor="message">Nachricht</Label>
-        <Textarea id="message" {...register("message")} aria-invalid={!!errors.message} />
-        <FieldError>{errors.message?.message}</FieldError>
+        <Textarea id="message" {...register("message")} aria-invalid={!!errors.message} aria-describedby="message-error" />
+        <FieldError id="message-error">{errors.message?.message}</FieldError>
       </div>
 
       <Button type="submit" size="lg" className="w-full sm:w-auto">
-        Nachricht senden
+        E-Mail vorbereiten
       </Button>
 
-      {submitState.status === "success" && (
+      {submitted && (
         <p role="status" className="flex items-start gap-2 rounded-[var(--radius-sm)] border border-success/30 bg-success/10 p-4 text-sm text-foreground">
-          <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-success" />
-          Ihr E-Mail-Programm öffnet sich mit einer vorausgefüllten Nachricht. Falls nicht, schreiben Sie mir
-          gerne direkt an {siteConfig.email}.
+          <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-success" aria-hidden="true" />
+          <span>
+            Ihr E-Mail-Programm sollte sich mit der vorbereiteten Nachricht geöffnet haben. Die Nachricht ist
+            erst verschickt, wenn Sie sie dort absenden. Falls sich nichts geöffnet hat, schreiben Sie mir
+            bitte direkt an {siteConfig.email}.
+          </span>
         </p>
       )}
     </form>

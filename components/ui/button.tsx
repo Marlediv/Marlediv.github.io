@@ -28,36 +28,46 @@ type BaseProps = {
 };
 
 type ButtonAsButton = BaseProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined };
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children"> & { href?: undefined };
 
-type ButtonAsLink = BaseProps &
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
+type ButtonAsLink = BaseProps & { href: string };
 
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
+/** Interne Seiten laufen über den Next.js-Router; externe Ziele und Dateien (z. B. PDF) sind normale Links. */
+function isPageHref(href: string) {
+  return href.startsWith("/") && !/\.[a-z0-9]+$/i.test(href);
+}
+
 export function Button({ variant = "primary", size = "md", className, children, ...props }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] font-medium",
+    "inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] font-medium transition-[filter,box-shadow,border-color,background-color,color] duration-200",
     variantClasses[variant],
     sizeClasses[size],
     className,
   );
 
-  if ("href" in props && props.href) {
-    const isExternal = props.href.startsWith("http");
+  if (props.href !== undefined) {
+    const { href } = props;
+
+    if (isPageHref(href)) {
+      return (
+        <Link href={href} className={classes}>
+          {children}
+        </Link>
+      );
+    }
+
+    const isExternal = /^https?:\/\//.test(href);
     return (
-      <Link
-        href={props.href}
-        className={classes}
-        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      >
+      <a href={href} className={classes} {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
         {children}
-      </Link>
+      </a>
     );
   }
 
   return (
-    <button className={classes} {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button className={classes} {...props}>
       {children}
     </button>
   );
