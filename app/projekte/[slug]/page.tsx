@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects, getProjectBySlug } from "@/content/projects";
+import { pageMetadata } from "@/lib/metadata";
 import { ProjectDetail } from "@/components/projects/project-detail";
 
 export function generateStaticParams() {
@@ -17,15 +18,12 @@ export async function generateMetadata({
 
   if (!project) return {};
 
-  return {
+  return pageMetadata({
     title: project.title,
     description: project.shortDescription,
-    openGraph: {
-      title: project.title,
-      description: project.shortDescription,
-      type: "article",
-    },
-  };
+    path: `/projekte/${project.slug}`,
+    type: "article",
+  });
 }
 
 export default async function ProjektDetailPage({

@@ -1,37 +1,24 @@
 export type Certification = {
   title: string;
   issuer: string;
-  issueDate?: string;
-  expirationDate?: string;
-  credentialId?: string;
+  /** Jahr des Abschlusses bzw. der Ausstellung. */
+  year?: number;
   credentialUrl?: string;
-  /** Kennzeichnet Beispieldaten, die noch nicht tatsächlich erworben wurden. */
-  isPlaceholder: boolean;
 };
 
 /**
- * WICHTIG: Dies sind austauschbare Beispieleinträge zur Veranschaulichung der Darstellung.
- * Ersetze `isPlaceholder: true` erst, wenn die Zertifizierung tatsächlich erworben wurde.
+ * Abschlüsse und Zertifikate.
+ * Hier ausschließlich tatsächlich erworbene Nachweise eintragen – keine geplanten.
  */
 export const certifications: Certification[] = [
   {
-    title: "Azure Data Fundamentals (Beispiel)",
-    issuer: "Microsoft",
-    isPlaceholder: true,
+    title: "Fachinformatiker für Daten- und Prozessanalyse",
+    issuer: "IHK-Abschluss · COMCAVE College Münster",
+    year: 2026,
   },
   {
-    title: "Databricks Lakehouse Fundamentals (Beispiel)",
-    issuer: "Databricks",
-    isPlaceholder: true,
-  },
-  {
-    title: "AWS Cloud Practitioner (Beispiel)",
-    issuer: "Amazon Web Services",
-    isPlaceholder: true,
-  },
-  {
-    title: "SnowPro Core (Beispiel)",
-    issuer: "Snowflake",
-    isPlaceholder: true,
+    title: "Chemikant",
+    issuer: "IHK-Abschluss",
+    year: 2006,
   },
 ];

@@ -1,68 +1,79 @@
-import type { Metadata } from "next";
+import Link from "next/link";
 import { siteConfig } from "@/content/site-config";
 import { PageContainer } from "@/components/layout/page-container";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Datenschutzerklärung",
   description: "Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.",
-  robots: { index: true, follow: false },
-};
+  path: "/datenschutz",
+  index: false,
+});
 
 export default function DatenschutzPage() {
   return (
     <PageContainer narrow className="py-20">
       <h1 className="font-display text-3xl font-semibold text-foreground">Datenschutzerklärung</h1>
 
-      <div className="mt-6 rounded-[var(--radius-md)] border border-accent-violet/30 bg-accent-violet-soft p-4 text-sm text-foreground">
-        <strong>Hinweis (vor Veröffentlichung entfernen):</strong> Dieser Text ist ein Muster, keine
-        Rechtsberatung, und muss vor dem Livegang an die tatsächlich eingesetzten Dienste (z. B. Hosting,
-        ggf. Analyse-Tools) sowie an die geltende Rechtslage angepasst werden.
-      </div>
-
       <div className="prose-article mt-10">
         <h2>1. Verantwortlicher</h2>
         <p>
-          {siteConfig.fullName}, {siteConfig.email}. Siehe auch die Angaben im{" "}
-          <a href="/impressum">Impressum</a>.
+          {siteConfig.fullName}, <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>. Die
+          vollständigen Angaben finden Sie im <Link href="/impressum">Impressum</Link>.
         </p>
 
-        <h2>2. Verarbeitung beim Besuch der Website</h2>
+        <h2>2. Hosting über GitHub Pages</h2>
         <p>
-          Beim Aufruf dieser Website verarbeitet der Hosting-Anbieter automatisch technische Informationen
-          (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite), die für die technische
-          Bereitstellung und Sicherheit der Website erforderlich sind. Rechtsgrundlage ist Art. 6 Abs. 1 lit.
-          f DSGVO (berechtigtes Interesse an einem sicheren, funktionsfähigen Betrieb).
+          Diese Website wird als statische Seite über GitHub Pages bereitgestellt, einen Dienst der GitHub
+          Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf der Website
+          verarbeitet GitHub technisch notwendige Zugriffsdaten, insbesondere die IP-Adresse, Datum und
+          Uhrzeit des Zugriffs sowie die aufgerufene Seite. Dabei kann eine Übermittlung in die USA
+          stattfinden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; das berechtigte Interesse liegt in der
+          sicheren und zuverlässigen Bereitstellung der Website. Auf Art und Dauer der Speicherung durch
+          GitHub habe ich keinen Einfluss. Weitere Informationen enthält die{" "}
+          <a
+            href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Datenschutzerklärung von GitHub
+          </a>
+          .
         </p>
 
-        <h2>3. Kontaktformular</h2>
+        <h2>3. Cookies, lokale Speicherung und eingebundene Dienste</h2>
         <p>
-          Das Kontaktformular öffnet Ihr lokales E-Mail-Programm mit einer vorausgefüllten Nachricht
-          („mailto:“-Link); die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, ggf. Unternehmen,
-          Betreff, Nachricht) werden dabei ausschließlich lokal in Ihrem Browser verarbeitet und nicht an
-          einen Server dieser Website übertragen. Der eigentliche Versand erfolgt erst, wenn Sie die
-          vorbereitete E-Mail über Ihr E-Mail-Programm absenden; Rechtsgrundlage hierfür ist Art. 6 Abs. 1
-          lit. b DSGVO (vorvertragliche Anfrage) bzw. lit. f DSGVO (berechtigtes Interesse an der
-          Kommunikation).
+          Diese Website setzt keine Cookies und verwendet keine Analyse- oder Tracking-Dienste. Schriften
+          werden von dieser Website selbst ausgeliefert; es werden keine Inhalte von Drittanbietern
+          nachgeladen. Wenn Sie zwischen hellem und dunklem Design wechseln, wird ausschließlich diese
+          Einstellung im lokalen Speicher Ihres Browsers abgelegt. Sie wird nicht übertragen und kann über die
+          Browsereinstellungen jederzeit gelöscht werden.
         </p>
 
-        <h2>4. Keine Weitergabe an Dritte ohne Rechtsgrundlage</h2>
+        <h2>4. Kontaktformular und E-Mail</h2>
         <p>
-          Eine Übermittlung Ihrer Daten an Dritte erfolgt nur, soweit dies gesetzlich erlaubt ist oder Sie
-          eingewilligt haben.
+          Das Kontaktformular überträgt keine Daten an einen Server. Es öffnet Ihr E-Mail-Programm mit einer
+          vorausgefüllten Nachricht; Ihre Eingaben (Name, E-Mail-Adresse, ggf. Unternehmen, Betreff,
+          Nachricht) werden bis dahin nur in Ihrem Browser verarbeitet. Wenn Sie die E-Mail absenden,
+          verarbeite ich die darin enthaltenen Angaben, um Ihre Anfrage zu beantworten. Rechtsgrundlage ist
+          Art. 6 Abs. 1 lit. b DSGVO, soweit die Anfrage auf einen Vertrag gerichtet ist, im Übrigen Art. 6
+          Abs. 1 lit. f DSGVO. Die Nachrichten werden gelöscht, sobald sie für die Bearbeitung nicht mehr
+          erforderlich sind und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
         </p>
 
-        <h2>5. Ihre Rechte</h2>
+        <h2>5. Externe Links</h2>
         <p>
-          Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
-          Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten. Wenden
-          Sie sich hierfür an die oben genannte Kontaktadresse.
+          Diese Website verlinkt auf externe Angebote, unter anderem GitHub und LinkedIn. Daten werden an
+          diese Anbieter erst übertragen, wenn Sie einen solchen Link anklicken. Für die dortige
+          Datenverarbeitung ist der jeweilige Anbieter verantwortlich.
         </p>
 
-        <h2>6. Cookies</h2>
+        <h2>6. Ihre Rechte</h2>
         <p>
-          Diese Website setzt aktuell keine zustimmungspflichtigen Tracking- oder Analyse-Cookies ein. Sollte
-          sich dies ändern, wird an dieser Stelle eine Einwilligung über einen Cookie-Hinweis eingeholt (siehe
-          vorbereitete Consent-Komponente im Quellcode).
+          Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und
+          Datenübertragbarkeit sowie das Recht, einer Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f
+          DSGVO zu widersprechen. Wenden Sie sich dazu an die oben genannte Kontaktadresse. Außerdem können
+          Sie sich bei einer Datenschutzaufsichtsbehörde beschweren.
         </p>
       </div>
     </PageContainer>

@@ -71,17 +71,6 @@ export function HeroBackground() {
         ))}
       </svg>
 
-      <style>{`
-        .hero-pipeline-flow {
-          animation: hero-pipeline-dash 8s linear infinite;
-        }
-        @keyframes hero-pipeline-dash {
-          to {
-            stroke-dashoffset: -284;
-          }
-        }
-      `}</style>
-
       <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/30 to-background" />
     </div>
   );

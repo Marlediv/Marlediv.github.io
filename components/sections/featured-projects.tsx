@@ -14,7 +14,7 @@ export function FeaturedProjects() {
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-blue">Ausgewählte Projekte</p>
             <h2 className="mt-2 font-display text-2xl font-semibold text-foreground sm:text-3xl">
-              Von der Anforderung zur produktiven Datenlösung
+              Berufliche Praxis und eigene Referenzprojekte
             </h2>
           </div>
           <Button href="/projekte" variant="ghost" className="hidden sm:inline-flex">

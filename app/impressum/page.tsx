@@ -1,63 +1,69 @@
-import type { Metadata } from "next";
 import { siteConfig } from "@/content/site-config";
 import { PageContainer } from "@/components/layout/page-container";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Impressum",
-  description: "Impressum gemäß § 5 TMG.",
-  robots: { index: true, follow: false },
-};
+  description: "Anbieterkennzeichnung gemäß § 5 DDG.",
+  path: "/impressum",
+  index: false,
+});
 
 export default function ImpressumPage() {
+  const { street, postalCode, city } = siteConfig.address;
+  const hasAddress = Boolean(street && postalCode && city);
+
   return (
     <PageContainer narrow className="py-20">
       <h1 className="font-display text-3xl font-semibold text-foreground">Impressum</h1>
 
-      <div className="mt-6 rounded-[var(--radius-md)] border border-accent-violet/30 bg-accent-violet-soft p-4 text-sm text-foreground">
-        <strong>Hinweis (vor Veröffentlichung entfernen):</strong> Dieser Text ist ein Muster und ersetzt keine
-        Rechtsberatung. Bitte vor dem Livegang durch eine fachkundige Person prüfen und mit den tatsächlichen
-        Angaben (Anschrift, ggf. Handelsregister, Aufsichtsbehörde etc.) vervollständigen.
-      </div>
-
       <div className="prose-article mt-10">
-        <h2>Angaben gemäß § 5 TMG</h2>
+        <h2>Angaben gemäß § 5 DDG</h2>
         <p>
           {siteConfig.fullName}
           <br />
-          [Straße und Hausnummer einfügen]
-          <br />
-          [PLZ und Ort einfügen]
-          <br />
+          {hasAddress ? (
+            <>
+              {street}
+              <br />
+              {postalCode} {city}
+              <br />
+            </>
+          ) : (
+            <>
+              <em>Die vollständige Anschrift wird in Kürze ergänzt.</em>
+              <br />
+            </>
+          )}
           Deutschland
         </p>
 
         <h2>Kontakt</h2>
         <p>
-          E-Mail: {siteConfig.email}
-          <br />
-          [Telefonnummer optional einfügen]
+          E-Mail: <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
         </p>
 
-        <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+        <h2>Verantwortlich für den Inhalt gemäß § 18 Abs. 2 MStV</h2>
         <p>{siteConfig.fullName}, Anschrift wie oben.</p>
 
         <h2>Haftung für Inhalte</h2>
         <p>
-          Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den
-          allgemeinen Gesetzen verantwortlich. Eine Verpflichtung zur Überwachung übermittelter oder
-          gespeicherter fremder Informationen besteht nicht.
+          Die Inhalte dieser Website wurden mit Sorgfalt erstellt. Für eigene Inhalte bin ich nach den
+          allgemeinen Gesetzen verantwortlich. Eine Gewähr für Richtigkeit, Vollständigkeit und Aktualität
+          der bereitgestellten Informationen übernehme ich nicht.
         </p>
 
         <h2>Haftung für Links</h2>
         <p>
-          Diese Website kann Links zu externen Websites Dritter enthalten, auf deren Inhalte kein Einfluss
-          besteht. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.
+          Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss
+          habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich. Zum
+          Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar.
         </p>
 
         <h2>Urheberrecht</h2>
         <p>
-          Die durch die Seitenbetreiber erstellten Inhalte und Werke auf dieser Website unterliegen dem
-          deutschen Urheberrecht.
+          Die von mir erstellten Inhalte und Werke auf dieser Website unterliegen dem deutschen Urheberrecht.
+          Eine Verwendung außerhalb der Grenzen des Urheberrechts bedarf meiner vorherigen Zustimmung.
         </p>
       </div>
     </PageContainer>

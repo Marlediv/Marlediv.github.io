@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import { Mail, MapPin } from "lucide-react";
 import { siteConfig } from "@/content/site-config";
 import { PageContainer } from "@/components/layout/page-container";
 import { ContactForm } from "@/components/contact/contact-form";
+import { pageMetadata } from "@/lib/metadata";
 import { CopyEmailButton } from "@/components/contact/copy-email-button";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Kontakt",
-  description: "Nimm Kontakt auf – für Projekte, offene Positionen oder technische Fragen rund um Data Engineering.",
-};
+  description: "Kontakt zu Marco Grochowiak – für Projekte, offene Positionen oder technische Fragen rund um Data Engineering.",
+  path: "/kontakt",
+});
 
 export default function KontaktPage() {
   return (
@@ -19,16 +20,17 @@ export default function KontaktPage() {
       </h1>
       <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
         Ob konkretes Projekt, offene Stelle oder eine technische Frage zu Datenplattformen und Automatisierung –
-        schreiben Sie mir gerne über das Formular oder direkt per E-Mail.
+        schreiben Sie mir direkt per E-Mail oder nutzen Sie das Formular. Es bereitet eine Nachricht in Ihrem
+        E-Mail-Programm vor; es werden keine Daten an einen Server übertragen.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-6 text-sm text-muted-foreground">
         <a href={`mailto:${siteConfig.email}`} className="inline-flex items-center gap-2 hover:text-foreground">
-          <Mail size={15} /> {siteConfig.email}
+          <Mail size={15} aria-hidden="true" /> {siteConfig.email}
         </a>
         <CopyEmailButton email={siteConfig.email} />
         <span className="inline-flex items-center gap-2">
-          <MapPin size={15} /> {siteConfig.location}
+          <MapPin size={15} aria-hidden="true" /> {siteConfig.region}, {siteConfig.location}
         </span>
       </div>
 

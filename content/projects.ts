@@ -38,8 +38,6 @@ export type Project = {
   githubUrl?: string;
   liveUrl?: string;
   documentationUrl?: string;
-  imageUrl?: string;
-  imageAlt?: string;
 };
 
 /**
@@ -281,14 +279,10 @@ export const projects: Project[] = [
   },
 ];
 
-export const projectCategories: ProjectCategory[] = [
-  "Data Engineering",
-  "Cloud",
-  "Analytics",
-  "AI",
-  "Automation",
-  "Open Source",
-];
+/** Nur Kategorien, zu denen es tatsächlich Projekte gibt – in der Reihenfolge ihres ersten Auftretens. */
+export const projectCategories: ProjectCategory[] = Array.from(
+  new Set(projects.map((project) => project.category)),
+);
 
 export function getFeaturedProjects(): Project[] {
   return projects

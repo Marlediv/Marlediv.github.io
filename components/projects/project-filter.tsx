@@ -36,7 +36,7 @@ export function ProjectFilter() {
         ))}
       </div>
 
-      <ProjectGrid projects={filtered} />
+      <ProjectGrid projects={filtered} headingLevel="h2" />
     </div>
   );
 }

@@ -38,10 +38,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
 );
 Textarea.displayName = "Textarea";
 
-export function FieldError({ children }: { children?: string }) {
+export function FieldError({ id, children }: { id?: string; children?: string }) {
   if (!children) return null;
   return (
-    <p role="alert" className="mt-1.5 text-xs text-danger">
+    <p id={id} role="alert" className="mt-1.5 text-xs text-danger">
       {children}
     </p>
   );

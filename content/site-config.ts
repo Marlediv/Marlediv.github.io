@@ -7,44 +7,38 @@ export const siteConfig = {
   name: "Marco",
   fullName: "Marco Grochowiak",
   title: "Data Engineer",
-  alternativeTitles: [
-    "Senior Data Engineer",
-    "Data Platform Engineer",
-    "Cloud Data Engineer",
-    "Analytics Engineer",
-    "AI Automation Engineer",
-  ],
-  headline: "Building scalable data platforms, reliable pipelines and intelligent automation.",
-  headlineDe:
-    "Ich entwickle skalierbare Datenplattformen, zuverlässige Pipelines und intelligente Automatisierungen.",
+  headline: "Aus gewachsenen Datenbeständen werden verlässliche Datenprodukte.",
   shortDescription:
-    "Ich konzipiere und entwickle moderne Datenlösungen, die komplexe Informationen zuverlässig in verwertbare Geschäftsergebnisse verwandeln.",
+    "Ich integriere, validiere und modelliere Daten – von der kontrollierten ERP-Stammdatenmigration bis zum analytischen Datenmodell. Mit Prozessverständnis aus Chemieproduktion und Logistik.",
   description:
-    "Data Engineer mit Fokus auf skalierbare Cloud-Datenplattformen, robuste ETL/ELT-Pipelines, Data Quality und intelligente Automatisierung mit KI.",
+    "Data Engineer mit Schwerpunkt auf Datenintegration, SQL-gestützter Datenvalidierung, Datenmodellierung und kontrollierter ERP-Stammdatenmigration.",
   email: "marco.grochowiak@outlook.com",
   location: "Deutschland",
-  locationCity: "Münsterland",
+  region: "Münsterland",
   availability: true,
   availabilityText: "Offen für neue Projekte und Festanstellung",
 
-  // Zentral konfigurierbare Links – hier später echte URLs eintragen.
+  /**
+   * Ladungsfähige Anschrift für das Impressum (§ 5 DDG).
+   * Solange `street` leer ist, zeigt das Impressum einen sichtbaren Hinweis auf die fehlende Angabe.
+   */
+  address: {
+    street: "",
+    postalCode: "",
+    city: "",
+  },
+
   githubUsername: "marlediv",
   githubUrl: "https://github.com/marlediv",
   linkedinUrl: "https://www.linkedin.com/in/marco-grochowiak-2a5b3b313/",
   resumeUrl: "/documents/marco-cv.pdf",
-
-  locale: "de-DE",
-  defaultLanguage: "de" as const,
-  // Architektur ist zweisprachig vorbereitet (siehe README, Abschnitt „Internationalisierung“).
-  supportedLanguages: ["de"] as const,
 } as const;
 
 export const siteMetadata = {
-  siteName: `${siteConfig.name} – ${siteConfig.title}`,
-  titleTemplate: "%s | Marco – Data Engineer",
-  defaultTitle: `${siteConfig.name} – ${siteConfig.title}`,
+  siteName: `${siteConfig.fullName} – ${siteConfig.title}`,
+  titleTemplate: `%s | ${siteConfig.fullName}`,
+  defaultTitle: `${siteConfig.fullName} – ${siteConfig.title}`,
   defaultDescription: siteConfig.description,
-  baseUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  twitterHandle: "@example",
-  ogImage: "/og-image.png",
+  // Ohne abschließenden Slash. Im Deployment-Workflow auf die Live-URL gesetzt.
+  baseUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
 } as const;

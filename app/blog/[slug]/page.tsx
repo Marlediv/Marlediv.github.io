@@ -8,7 +8,9 @@ import remarkGfm from "remark-gfm";
 import { Clock, ArrowLeft } from "lucide-react";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
-import { siteMetadata } from "@/content/site-config";
+import { siteConfig, siteMetadata } from "@/content/site-config";
+import { absoluteUrl, pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/layout/json-ld";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
 import { TableOfContents, extractHeadings } from "@/components/blog/table-of-contents";
@@ -29,21 +31,13 @@ export async function generateMetadata({
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  return {
+  return pageMetadata({
     title: post.title,
     description: post.description,
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: "article",
-      publishedTime: post.date,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-    },
-  };
+    path: `/blog/${post.slug}`,
+    type: "article",
+    publishedTime: post.date,
+  });
 }
 
 const mdxComponents = {
@@ -70,15 +64,19 @@ export default async function BlogArticlePage({
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    url: `${siteMetadata.baseUrl}/blog/${post.slug}`,
+    inLanguage: "de-DE",
+    keywords: post.tags.join(", "),
+    author: { "@type": "Person", name: siteConfig.fullName, url: siteMetadata.baseUrl },
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    url: absoluteUrl(`/blog/${post.slug}`),
   };
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Blog", item: `${siteMetadata.baseUrl}/blog` },
-      { "@type": "ListItem", position: 2, name: post.title, item: `${siteMetadata.baseUrl}/blog/${post.slug}` },
+      { "@type": "ListItem", position: 1, name: "Blog", item: absoluteUrl("/blog") },
+      { "@type": "ListItem", position: 2, name: post.title, item: absoluteUrl(`/blog/${post.slug}`) },
     ],
   };
 
@@ -133,8 +131,8 @@ export default async function BlogArticlePage({
 
       <RelatedPosts posts={related} />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
     </PageContainer>
   );
 }

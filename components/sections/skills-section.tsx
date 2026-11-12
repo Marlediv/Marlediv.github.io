@@ -9,10 +9,10 @@ export function SkillsSection() {
       <PageContainer>
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-blue">Kompetenzbereiche</p>
         <h2 className="mt-2 font-display text-2xl font-semibold text-foreground sm:text-3xl">
-          Technologien, mit denen ich arbeite
+          Womit ich arbeite
         </h2>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {skillCategories.map((category) => (
             <Card key={category.id} className="p-6">
               <h3 className="font-display text-base font-semibold text-foreground">{category.title}</h3>

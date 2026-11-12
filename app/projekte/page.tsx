@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { PageContainer } from "@/components/layout/page-container";
+import { pageMetadata } from "@/lib/metadata";
 import { ProjectFilter } from "@/components/projects/project-filter";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Projekte",
-  description: "Ausgewählte Projekte aus Data Engineering, Cloud, Analytics, AI und Automation.",
-};
+  description: "Berufliche Fallstudien und eigene Referenzprojekte aus Data Engineering, Cloud-Datenplattformen, Analytics und AI.",
+  path: "/projekte",
+});
 
 export default function ProjektePage() {
   return (
@@ -15,8 +16,8 @@ export default function ProjektePage() {
         Ein Blick auf meine Arbeit
       </h1>
       <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
-        Eine Auswahl an Projekten, die zeigen, wie ich Anforderungen in robuste, produktionsreife
-        Datenlösungen übersetze.
+        Berufliche Fallstudien, Portfolio- und Lernprojekte. Bei jedem Projekt ist gekennzeichnet, in welchem
+        Rahmen es entstanden ist und welche Nachweise öffentlich einsehbar sind.
       </p>
 
       <div className="mt-12">

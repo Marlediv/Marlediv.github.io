@@ -12,15 +12,15 @@ export function ArticleCard({ post }: { post: BlogPostMeta }) {
         <time dateTime={post.date}>{formatDate(post.date)}</time>
         <span aria-hidden="true">·</span>
         <span className="inline-flex items-center gap-1">
-          <Clock size={12} /> {post.readingTimeMinutes} Min. Lesezeit
+          <Clock size={12} aria-hidden="true" /> {post.readingTimeMinutes} Min. Lesezeit
         </span>
       </div>
 
-      <Link href={`/blog/${post.slug}`}>
-        <h2 className="mt-3 font-display text-lg font-semibold text-foreground transition-colors hover:text-accent-blue">
+      <h2 className="mt-3 font-display text-lg font-semibold text-foreground">
+        <Link href={`/blog/${post.slug}`} className="transition-colors hover:text-accent-blue">
           {post.title}
-        </h2>
-      </Link>
+        </Link>
+      </h2>
 
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{post.description}</p>
 
